@@ -1,0 +1,24 @@
+<h1><%= @list.name %></h1>
+
+<div class="cards">
+<% @list.movies.each do |movie| %>
+  <img src="<%= movie.poster_url %>">
+    <h2><%= movie.title %></h2>
+    <%= movie.overview %>
+    <%= movie.rating %>
+    <%= link_to("+", bookmark_path(movie.bookmarks.find_by(list: @list)), method: :delete) %>
+  </div>
+<% end %>
+</div>
+
+<h2 class="text-center p-3">Add a movie:</h2>
+<div class="m-5">
+  <%= simple_form_for([@list, @bookmark]) do |f|%>
+    <%= f.association :movie %>
+    <%= f.input :comment %>
+
+    <%= f.submit %>
+  <% end %>
+</div>
+
+<%= link_to 'Back', lists_path %>
